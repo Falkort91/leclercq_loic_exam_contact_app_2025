@@ -18,15 +18,41 @@ export default class ContactList{
     this.contacts=contacts.map(contact => new Contact(contact));
     this.render();
   }
-  getContactsLeftcount(){
-    return this.contacts.filter(contact => contact).length;
-  }
+  /* getContactsLeftcount(){
+    return this.contacts.length;
+  } */
   renderContactleftcount(){
-    this.domElt.querySelector(".contact-count").innerText = this.getContactsLeftcount();
+    this.domElt.querySelector(".contact-count").innerText = this.contacts.length;
   }
   render(){
      this.domElt.innerHTML = getTemplate();
      this.contacts.forEach(contact => contact.render(this.domElt.querySelector(".contact-list")));
      this.renderContactleftcount();
+     this.initEvent();
   }
+  initEvent(){
+    this.domElt.querySelector(".add-button").addEventListener("click", () => {this.addContact(this.domElt.querySelector(".form-firstname").value, this.domElt.querySelector(".form-lastname").value, this.domElt.querySelector(".form-email").value);
+    this.resetInput();
+    });
+  }
+  resetInput(){
+    this.domElt.querySelector(".form-firstname").value="";
+    this.domElt.querySelector(".form-lastname").value="";
+    this.domElt.querySelector(".form-email").value="";
+  }
+
+  async addContact(formFirstname,formLastname, formemail){
+    //Ajout dans la DB
+    const contact = await DB.create(formFirstname,formLastname, formemail);
+    //Création d'un objet contact
+    const newContact = new Contact(contact);
+    //Ajout dans le tableau contacts de contactList
+    this.contacts.push(newContact);
+    //Ajout dans le dom
+    newContact.render(this.domElt.querySelector(".contact-list"));
+    //M.A.J de nombre de contact
+    this.renderContactleftcount();
+  }
+
+  
 }

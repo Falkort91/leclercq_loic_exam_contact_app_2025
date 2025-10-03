@@ -8,4 +8,16 @@ export default class DB{
     const response = await fetch(this.apiURL + "contacts");
     return response.json();
   }
+  static async create (formFirstname,formLastname, formemail){
+    const response = await fetch(this.apiURL + "contacts",{
+      method:"post",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({
+        firstname: formFirstname,
+        lastname: formLastname,
+        email: formemail
+      })
+    });
+    return response.json();
+  }
 }
