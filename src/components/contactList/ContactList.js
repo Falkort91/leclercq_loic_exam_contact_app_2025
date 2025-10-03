@@ -30,10 +30,23 @@ export default class ContactList{
      this.renderContactleftcount();
      this.initEvent();
   }
+
+  async deleteOneById(id){
+    // Supprimer de la DB
+    const response = await DB.deleteOneById(id);
+    //Supprimer des contacts
+    this.contacts.splice(this.contacts.findIndex(contact => contact.id == id),1);
+    //Supprimer du DOM
+    this.domElt.querySelector(`[data-id="${id}"]`).remove();
+    //Relancer le renderContactsLeftCount
+    this.renderContactleftcount();
+  }
+
   initEvent(){
     this.domElt.querySelector(".add-button").addEventListener("click", () => {this.addContact(this.domElt.querySelector(".form-firstname").value, this.domElt.querySelector(".form-lastname").value, this.domElt.querySelector(".form-email").value);
     this.resetInput();
     });
+    
   }
   resetInput(){
     this.domElt.querySelector(".form-firstname").value="";

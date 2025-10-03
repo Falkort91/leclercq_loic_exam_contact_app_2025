@@ -2,7 +2,7 @@ import './styles.css';
 
 export default function getTemplate(contact){
   return `
-          <tr class="contact-row">
+          <tr data-id="${contact.id}" class="contact-row">
               <td class="p-4">
                 <span class="isEditing-hidden">${contact.firstname}</span>
                 <input

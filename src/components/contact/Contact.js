@@ -14,5 +14,12 @@ export default class Contact{
     template.innerHTML = getTemplate(this);
     this.domElt=template.content.firstElementChild;
     el.append(this.domElt);
+    this.initEvent();
+  }
+
+  initEvent(){
+    this.domElt.querySelector(".btn-delete").addEventListener("click",() => {
+      window.Contactlist.deleteOneById(this.id);
+    });
   }
 }
