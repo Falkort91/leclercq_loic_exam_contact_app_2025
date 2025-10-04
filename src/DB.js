@@ -10,12 +10,25 @@ export default class DB{
   }
   static async create (formFirstname,formLastname, formemail){
     const response = await fetch(this.apiURL + "contacts",{
-      method:"post",
+      method:"POST",
       headers:{"Content-Type":"application/json"},
       body: JSON.stringify({
         firstname: formFirstname,
         lastname: formLastname,
         email: formemail
+      })
+    });
+    return response.json();
+  }
+
+    static async updateOne(contact){
+    const response = await fetch(this.apiURL + "contacts/" + contact.id,{
+      method:"PUT",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({
+        firstname: contact.firstname,
+        lastname: contact.lastname,
+        email: contact.email
       })
     });
     return response.json();
