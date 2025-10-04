@@ -13,6 +13,7 @@ export default class ContactList{
     //On charge les contacts
     this.loadContacts();
   }
+
   async loadContacts(){
     const contacts= await DB.findAll();
     this.contacts=contacts.map(contact => new Contact(contact));
@@ -42,9 +43,16 @@ export default class ContactList{
   }
 
   initEvent(){
-    this.domElt.querySelector(".add-button").addEventListener("click", () => {this.addContact(this.domElt.querySelector(".form-firstname").value, this.domElt.querySelector(".form-lastname").value, this.domElt.querySelector(".form-email").value);
-    this.resetInput();
+    this.domElt.querySelector(".add-button").addEventListener("click", () => {
+      this.addContact(this.domElt.querySelector(".form-firstname").value, 
+      this.domElt.querySelector(".form-lastname").value, 
+      this.domElt.querySelector(".form-email").value);
+      // On vide les inputs après avoir add le contact (clic sur le add button)
+      this.resetInput();
     });
+    //On cible l'input search-filter et on écoute l'input (il suivra l'évolution de ce qui est écrit dans l'input) via la fonction searchFilter
+    this.domElt.querySelector(".search-filter").addEventListener("input",(e)=>{this.searchFilter(e)});
+
     //On cible le span du firstname et on sur un clic on trie par ordre alpha les firstname
     this.domElt.querySelector(".filter-firstname").addEventListener("click",() => {this.filterByFirstname()});
     //On cible le span du lastname et on sur un clic on trie par ordre alpha les lastname
@@ -52,6 +60,21 @@ export default class ContactList{
     //On cible le span du email et on sur un clic on trie par ordre alpha les email
     this.domElt.querySelector(".filter-email").addEventListener("click",() => {this.filterByEmail()});
   }
+
+  searchFilter(e){
+      // On stock ce qu'il ya  dans l'input dans une constante
+      const searchValue = e.target.value.toLowerCase();
+      // On crée un tableau en lui imposant un filtre correspondant à la searchValue
+      const filteredContacts = this.contacts.filter(contact => 
+        contact.firstname.toLowerCase().includes(searchValue)||
+        contact.lastname.toLowerCase().includes(searchValue)||
+        contact.email.toLowerCase().includes(searchValue));
+        // On vide le tableau présent au départ
+      this.domElt.querySelector(".contact-list").innerHTML="";
+      // On réaffiche le tableau ayant subis le filtre
+      filteredContacts.forEach(contact => contact.render(this.domElt.querySelector(".contact-list")));
+  }
+
   // Fonction Tri par Firstname
   filterByFirstname(){
     this.contacts.sort((a, b) => a.firstname.localeCompare(b.firstname));
@@ -68,6 +91,7 @@ export default class ContactList{
     this.render();
   }
 
+  // On remet les values des inputs à vide 
   resetInput(){
     this.domElt.querySelector(".form-firstname").value="";
     this.domElt.querySelector(".form-lastname").value="";
@@ -86,5 +110,5 @@ export default class ContactList{
     //M.A.J de nombre de contact
     this.renderContactleftcount();
   }
-  
+
 }
