@@ -57,11 +57,13 @@ export default function getTemplate(){
         <table class="table-auto w-full contacts-table">
           <thead>
             <tr class="bg-gray-200">
-              <th class="text-left p-4 rounded-tl-lg">
+              <th class=" filter-firstname text-left p-4 rounded-tl-lg">
                 <a href="#">Firstname</a>
               </th>
-              <th class="text-left p-4"><a href="#">Lastname</a></th>
-              <th class="text-left p-4">
+              <th class="filter-lastname text-left p-4">
+                <a href="#">Lastname</a>
+              </th>
+              <th class="filter-email text-left p-4">
                 <a href="#">Email</a>
               </th>
               <th class="text-right p-4 rounded-tr-lg">Actions</th>

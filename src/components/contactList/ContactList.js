@@ -18,12 +18,11 @@ export default class ContactList{
     this.contacts=contacts.map(contact => new Contact(contact));
     this.render();
   }
-  /* getContactsLeftcount(){
-    return this.contacts.length;
-  } */
+  
   renderContactleftcount(){
     this.domElt.querySelector(".contact-count").innerText = this.contacts.length;
   }
+
   render(){
      this.domElt.innerHTML = getTemplate();
      this.contacts.forEach(contact => contact.render(this.domElt.querySelector(".contact-list")));
@@ -46,8 +45,29 @@ export default class ContactList{
     this.domElt.querySelector(".add-button").addEventListener("click", () => {this.addContact(this.domElt.querySelector(".form-firstname").value, this.domElt.querySelector(".form-lastname").value, this.domElt.querySelector(".form-email").value);
     this.resetInput();
     });
-    
+    //On cible le span du firstname et on sur un clic on trie par ordre alpha les firstname
+    this.domElt.querySelector(".filter-firstname").addEventListener("click",() => {this.filterByFirstname()});
+    //On cible le span du lastname et on sur un clic on trie par ordre alpha les lastname
+    this.domElt.querySelector(".filter-lastname").addEventListener("click",() => {this.filterByLastname()});
+    //On cible le span du email et on sur un clic on trie par ordre alpha les email
+    this.domElt.querySelector(".filter-email").addEventListener("click",() => {this.filterByEmail()});
   }
+  // Fonction Tri par Firstname
+  filterByFirstname(){
+    this.contacts.sort((a, b) => a.firstname.localeCompare(b.firstname));
+    this.render();
+  }
+  // Fonction Tri par Lastname
+  filterByLastname(){
+    this.contacts.sort((a, b) => a.lastname.localeCompare(b.lastname));
+    this.render();
+  }
+  // Fonction Tri par Email
+  filterByEmail(){
+    this.contacts.sort((a, b) => a.email.localeCompare(b.email));
+    this.render();
+  }
+
   resetInput(){
     this.domElt.querySelector(".form-firstname").value="";
     this.domElt.querySelector(".form-lastname").value="";
@@ -66,6 +86,5 @@ export default class ContactList{
     //M.A.J de nombre de contact
     this.renderContactleftcount();
   }
-
   
 }
