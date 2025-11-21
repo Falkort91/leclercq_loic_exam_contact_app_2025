@@ -1,0 +1,1 @@
+.contacts-table tbody tr:nth-of-type(2n){background:#f9fafb}.contacts-table tr:not(.isEditing) .isEditing-visible{display:none}.contacts-table tr:not(.isEditing) .isEditing-hidden{display:block}.contacts-table tr.isEditing .isEditing-visible{display:block}.contacts-table tr.isEditing .isEditing-hidden{display:none}
