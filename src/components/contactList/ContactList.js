@@ -5,7 +5,7 @@ import getTemplate from './templates';
 export default class ContactList{
   constructor(data){
     // Permet de prendre le focus sur #app via data.el et le el de new ContactList
-    this.domElt=document.querySelector(data.el);
+    this.domElt=document.querySelector(data.elt);
     // 1. La fonction setApiURL vas récupérer apiURL à travers data
     DB.setApiURL(data.apiURL);
     //On initialise les contacts sur un tableau vide
